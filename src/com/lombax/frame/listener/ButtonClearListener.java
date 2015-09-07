@@ -5,18 +5,19 @@ import java.awt.event.ActionListener;
 
 import javax.swing.JTextArea;
 
-import com.lombax.frame.MainFrame;
+import com.lombax.Social;
 
 public class ButtonClearListener implements ActionListener{
 	
-	private JTextArea textArea;
-	
 	public ButtonClearListener(JTextArea textArea){
-		this.textArea = textArea;
+		try{
+		}catch(NullPointerException e){
+			e.printStackTrace();
+		}
 	}
 	
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		MainFrame.clearTextArea(textArea);
+		Social.window.getMainPanel().clearTextArea();
 	}
 }

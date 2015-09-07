@@ -6,23 +6,25 @@ import java.awt.event.ActionListener;
 import javax.swing.JButton;
 import javax.swing.JToolBar;
 
-import com.lombax.frame.MainFrame;
-import com.lombax.frame.SocialPrefs;
+import com.lombax.Social;
 import com.lombax.frame.listener.ButtonClearListener;
+import com.lombax.preferences.SocialPrefs;
 
 public class SocialToolBar extends JToolBar {
 
 	private static final long serialVersionUID = -8345972107639260969L;
 
+	//create buttons
 	private JButton btnClear;
 	private JButton btnSave;
 	private JButton btnLoad;
-	
-//	private Container c = getRootPane();
+	private JButton btnWipe;
+//	private JButton btnMail;
 	
 	public SocialToolBar(String name){
 		super(name);
 		
+		// Save Button
 		btnSave = new SocialButton(" Save ",new ActionListener(){
 
 			@Override
@@ -32,6 +34,7 @@ public class SocialToolBar extends JToolBar {
 			
 		});
 		
+		// Load Button
 		btnLoad = new SocialButton(" Load ",new ActionListener(){
 
 			@Override
@@ -41,10 +44,46 @@ public class SocialToolBar extends JToolBar {
 			
 		});
 		
+		// Clear Button
+		try{
+			btnClear = new SocialButton(" Clear ",new ActionListener() {
+				
+				@Override
+				public void actionPerformed(ActionEvent e) {
+					Social.window.getMainPanel().clearTextArea();
+				}
+			});
+		}catch(NullPointerException e){
+			e.printStackTrace();
+		}
+		
+		
+		// Wipe Button
+		btnWipe = new SocialButton(" Wipe ",new ActionListener(){
 
-		btnClear = new SocialButton(" Clear ",new ButtonClearListener(MainFrame.getTextArea()));
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				SocialPrefs.clearPrefs();
+			}
+		});
+		
+//		btnMail = new SocialButton(" Mail ",new ActionListener(){
+//
+//			@Override
+//			public void actionPerformed(ActionEvent e) {
+//				
+//			}
+//			
+//		});
+		
+		// Add buttons to toolbar
+		try{
 		btnClear.setFocusable(false);
 		add(btnClear);
+		}catch(NullPointerException e){
+			e.printStackTrace();
+		}
+		
 		addSeparator();
 		
 		btnSave.setFocusable(false);
@@ -52,6 +91,11 @@ public class SocialToolBar extends JToolBar {
 		
 		btnLoad.setFocusable(false);
 		add(btnLoad);
+		
+		addSeparator();
+		
+		btnWipe.setFocusable(false);
+		add(btnWipe);
 	}
 	
 }
