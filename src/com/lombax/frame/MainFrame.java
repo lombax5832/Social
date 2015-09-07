@@ -3,15 +3,17 @@ package com.lombax.frame;
 import java.awt.Container;
 import java.awt.Dimension;
 
+import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JTabbedPane;
 
 import net.miginfocom.swing.MigLayout;
 
 import com.lombax.Social;
+import com.lombax.image.Images;
 import com.lombax.panel.MailPanel;
 import com.lombax.panel.MainPanel;
-import com.lombax.preferences.SocialPrefs;
+import com.lombax.panel.TwitterPanel;
 
 /**
  * @author Alexei
@@ -27,6 +29,7 @@ public class MainFrame extends JFrame {
 	
 	private MainPanel mainPanel = new MainPanel();
 	private MailPanel mailPanel = new MailPanel();
+	private TwitterPanel twitPanel = new TwitterPanel();
 	
 	public MainFrame(String title){
 		super(title);
@@ -45,7 +48,9 @@ public class MainFrame extends JFrame {
 		tabbedPane = new JTabbedPane();
 		tabbedPane.addTab("Main", mainPanel);
 		tabbedPane.addTab("Mail", mailPanel);
+		tabbedPane.addTab(null, new ImageIcon(Images.TWITTER_ICON_32), twitPanel);
 		tabbedPane.setFocusable(false);
+//		tabbedPane
 		mainPanel.requestFocus();
 		c.add(tabbedPane,"span,grow");
 		Social.log("TabbedPane added to container.");

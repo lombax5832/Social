@@ -14,7 +14,6 @@ public class SocialButton extends JButton {
 	public SocialButton(String title, ActionListener listener){
 		setText(title);
 		addActionListener(listener);
-//		setBorder(BorderFactory.createLineBorder(Color.BLACK, 1));
 		setMargin(new Insets(10, 10, 10, 10));
 	}
 }

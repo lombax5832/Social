@@ -38,8 +38,6 @@ public class MainPanel extends JPanel implements KeyListener{
 		
 		setLayout(new MigLayout("nogrid,flowy,wrap 1,fill"));
 		
-//		setBounds(0, 0, 990, 870);
-		
 		// Create swing components
 		
 		textField = new JTextField();

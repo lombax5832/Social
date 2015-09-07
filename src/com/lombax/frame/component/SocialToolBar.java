@@ -7,7 +7,6 @@ import javax.swing.JButton;
 import javax.swing.JToolBar;
 
 import com.lombax.Social;
-import com.lombax.frame.listener.ButtonClearListener;
 import com.lombax.preferences.SocialPrefs;
 
 public class SocialToolBar extends JToolBar {
