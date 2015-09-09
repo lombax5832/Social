@@ -6,7 +6,9 @@ import java.awt.event.ActionListener;
 import javax.swing.JButton;
 import javax.swing.JPanel;
 
+import com.lombax.Social;
 import com.lombax.frame.component.SocialButton;
+import com.lombax.preferences.SocialPrefs;
 import com.lombax.worker.TwitterLoginWorker;
 
 import net.miginfocom.swing.MigLayout;
@@ -29,7 +31,12 @@ public class TwitterPanel extends JPanel {
 		signIn = new SocialButton("Sign in with Twitter!",new ActionListener(){
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
-				new TwitterLoginWorker().execute();
+				if(SocialPrefs.getTwitterAccessToken()!=""){
+					Social.log("Authenticating with Twitter");
+					new TwitterLoginWorker().execute();
+				}else{
+					Social.log("Key is already: "+SocialPrefs.getTwitterAccessToken());
+				}
 			}
 		});
 		add(signIn,"grow");

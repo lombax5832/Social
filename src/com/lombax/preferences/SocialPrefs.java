@@ -33,11 +33,11 @@ public class SocialPrefs {
 		prefs.put(TWITTER_ACCESS_TOKEN_NAME, token);
 		prefs.put(TWITTER_ACCESS_SECRET_NAME, secret);
 	};
-	public static String loadTwitterAccessToken(){
-		return prefs.get(TWITTER_ACCESS_TOKEN_NAME, "");
+	public static String getTwitterAccessToken(){
+		return prefs.get(TWITTER_ACCESS_TOKEN_NAME, null);
 	};
-	public static String loadTwitterAccessSecret(){
-		return prefs.get(TWITTER_ACCESS_SECRET_NAME, "");
+	public static String getTwitterAccessSecret(){
+		return prefs.get(TWITTER_ACCESS_SECRET_NAME, null);
 	};
 	
 	public static void clearPrefs(){
