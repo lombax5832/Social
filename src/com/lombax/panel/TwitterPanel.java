@@ -31,7 +31,7 @@ public class TwitterPanel extends JPanel {
 		signIn = new SocialButton("Sign in with Twitter!",new ActionListener(){
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
-				if(SocialPrefs.getTwitterAccessToken()!=""){
+				if(!(SocialPrefs.getTwitterAccessToken().length()>5)){
 					Social.log("Authenticating with Twitter");
 					new TwitterLoginWorker().execute();
 				}else{

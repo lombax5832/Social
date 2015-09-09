@@ -37,6 +37,9 @@ public class TwitterLoginWorker extends SwingWorker<AccessToken, AccessToken>{
 	         }else{
 	           accessToken = Social.twitter.getOAuthAccessToken();
 	         }
+	         Social.log("Got it!");
+	         Social.twitter.setOAuthAccessToken(accessToken);
+	         Social.log("Logged in as: @"+Social.twitter.getScreenName());
 	      } catch (TwitterException te) {
 	        if(401 == te.getStatusCode()){
 	          System.out.println("Unable to get the access token.");
@@ -44,7 +47,6 @@ public class TwitterLoginWorker extends SwingWorker<AccessToken, AccessToken>{
 	          te.printStackTrace();
 	        }
 	      }
-	      Social.log("Got it!");
 	    }
 		return accessToken;
 	}
