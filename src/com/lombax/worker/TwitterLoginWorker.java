@@ -55,12 +55,11 @@ public class TwitterLoginWorker extends SwingWorker<AccessToken, AccessToken>{
 		AccessToken accessToken;
 		try {
 			accessToken = get();
-			SocialPrefs.saveTwitterAccessTokens(accessToken.getToken(), accessToken.getTokenSecret());
+			SocialPrefs.saveTwitterAccessTokens(accessToken);
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		} catch (ExecutionException e) {
 			e.printStackTrace();
 		}
 	}
-
 }

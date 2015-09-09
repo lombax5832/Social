@@ -3,7 +3,10 @@ package com.lombax.preferences;
 import java.util.prefs.BackingStoreException;
 import java.util.prefs.Preferences;
 
+import twitter4j.auth.AccessToken;
+
 import com.lombax.Social;
+import com.lombax.twitter.Utils;
 
 
 public class SocialPrefs {
@@ -13,8 +16,9 @@ public class SocialPrefs {
 	//Value Names
 	private static final String TEXT_AREA_NAME = "TEXT_AREA";
 	
-	private static final String TWITTER_ACCESS_TOKEN_NAME = "TWITTER_ACCESS_TOKEN";
-	private static final String TWITTER_ACCESS_SECRET_NAME = "TWITTER_ACCESS_SECRET";
+//	private static final String TWITTER_ACCESS_TOKEN_NAME = "TWITTER_ACCESS_TOKEN";
+//	private static final String TWITTER_ACCESS_SECRET_NAME = "TWITTER_ACCESS_SECRET";
+	private static final String TWITTER_ACCESS_TOKENS_NAME = "TWITTER_ACCESS_TOKENS";
 	
 	//Default Values
 	private static final String TEXT_AREA_DEFAULT = "";
@@ -29,17 +33,17 @@ public class SocialPrefs {
 	};
 	
 	//Twitter Keys
-	public static void saveTwitterAccessTokens(String token, String secret){
-		prefs.put(TWITTER_ACCESS_TOKEN_NAME, token);
-		prefs.put(TWITTER_ACCESS_SECRET_NAME, secret);
-	};
-	public static String getTwitterAccessToken(){
-		return prefs.get(TWITTER_ACCESS_TOKEN_NAME, "");
-	};
-	public static String getTwitterAccessSecret(){
-		return prefs.get(TWITTER_ACCESS_SECRET_NAME, "");
-	};
-	
+	public static void saveTwitterAccessTokens(AccessToken accessTokens){
+		prefs.put(TWITTER_ACCESS_TOKENS_NAME, Utils.serializeToken(accessTokens));
+	}
+	public static AccessToken loadTwitterAccessTokens(){
+		String tokenString = prefs.get(TWITTER_ACCESS_TOKENS_NAME, "");
+		AccessToken accessTokens = null;
+		if(tokenString!="")
+			accessTokens = Utils.deserializeToken(tokenString);
+		return accessTokens;
+	}
+
 	public static void clearPrefs(){
 		try {
 			prefs.clear();
@@ -48,8 +52,10 @@ public class SocialPrefs {
 		}
 	}
 	
+	/*
 	public static void clearAccessTokens(){
 		Social.twitter.setOAuthAccessToken(null);
 	}
+	*/
 	
 }
