@@ -9,6 +9,10 @@ import javax.swing.UnsupportedLookAndFeelException;
 import com.lombax.frame.MainFrame;
 import com.lombax.preferences.SocialPrefs;
 
+import twitter4j.Twitter;
+import twitter4j.TwitterFactory;
+import twitter4j.auth.AccessToken;
+
 public class Social {
 
 	/**
@@ -16,6 +20,8 @@ public class Social {
 	 */
 	
 	public static MainFrame window;
+	public static Twitter twitter = TwitterFactory.getSingleton();
+	public static AccessToken accessToken = null;
 	
 	public static void main(String[] args) {
 		
@@ -31,7 +37,8 @@ public class Social {
 					window = new MainFrame("Social");
 					window.setIconImage(Toolkit.getDefaultToolkit().getImage(Social.class.getResource("/javax/swing/plaf/metal/icons/ocean/info.png")));
 					window.getContentPane().setEnabled(false);
-					SocialPrefs.loadPrefs();
+					SocialPrefs.loadTextArea();
+					twitter.setOAuthConsumer("MsHSDeAPa0jHNkg7MKot2sGHf", "psRmCKpvIdSHynvusYRXCvaorOJeGysDvDgb62pc4yKTN3UJGd");
 				} catch (Exception e) {
 					e.printStackTrace();
 				}

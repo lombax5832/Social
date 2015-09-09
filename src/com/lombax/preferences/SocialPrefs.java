@@ -13,16 +13,31 @@ public class SocialPrefs {
 	//Value Names
 	private static final String TEXT_AREA_NAME = "TEXT_AREA";
 	
+	private static final String TWITTER_ACCESS_TOKEN_NAME = "TWITTER_ACCESS_TOKEN";
+	private static final String TWITTER_ACCESS_SECRET_NAME = "TWITTER_ACCESS_SECRET";
+	
 	//Default Values
 	private static final String TEXT_AREA_DEFAULT = "";
 	
-	public static void savePrefs(){
+	//Text Area
+	public static void saveTextArea(){
 		String textArea = Social.window.getMainPanel().getTextArea().getText();
 		prefs.put(TEXT_AREA_NAME, textArea);
 	};
-	
-	public static void loadPrefs(){
+	public static void loadTextArea(){
 		Social.window.getMainPanel().setTextArea(prefs.get(TEXT_AREA_NAME, TEXT_AREA_DEFAULT));
+	};
+	
+	//Twitter Keys
+	public static void saveTwitterAccessTokens(String token, String secret){
+		prefs.put(TWITTER_ACCESS_TOKEN_NAME, token);
+		prefs.put(TWITTER_ACCESS_SECRET_NAME, secret);
+	};
+	public static String loadTwitterAccessToken(){
+		return prefs.get(TWITTER_ACCESS_TOKEN_NAME, "");
+	};
+	public static String loadTwitterAccessSecret(){
+		return prefs.get(TWITTER_ACCESS_SECRET_NAME, "");
 	};
 	
 	public static void clearPrefs(){

@@ -28,7 +28,7 @@ public class SocialToolBar extends JToolBar {
 
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
-				SocialPrefs.savePrefs();
+				SocialPrefs.saveTextArea();
 			}
 			
 		});
@@ -38,7 +38,7 @@ public class SocialToolBar extends JToolBar {
 
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
-				SocialPrefs.loadPrefs();
+				SocialPrefs.loadTextArea();
 			}
 			
 		});
