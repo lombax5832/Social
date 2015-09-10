@@ -21,7 +21,7 @@ public class Social {
 	 */
 	
 	public static MainFrame window;
-	public static Twitter twitter = TwitterFactory.getSingleton();
+	public static Twitter twitter;
 	public static AccessToken accessToken = null;
 	
 	public static void main(String[] args) {
@@ -35,6 +35,7 @@ public class Social {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
+					resetTwitter();
 					window = new MainFrame("Social");
 					window.setIconImage(Toolkit.getDefaultToolkit().getImage(Social.class.getResource("/javax/swing/plaf/metal/icons/ocean/info.png")));
 					window.getContentPane().setEnabled(false);
@@ -49,6 +50,10 @@ public class Social {
 	
 	public static void log(String log){
 		System.out.println(log);
+	}
+	
+	public static void resetTwitter(){
+		twitter = TwitterFactory.getSingleton();
 	}
 
 }

@@ -7,6 +7,8 @@ import javax.swing.JButton;
 import javax.swing.JToolBar;
 
 import com.lombax.Social;
+import com.lombax.panel.TwitterPanel;
+import com.lombax.panel.TwitterPanel.Display;
 import com.lombax.preferences.SocialPrefs;
 
 public class SocialToolBar extends JToolBar {
@@ -63,6 +65,9 @@ public class SocialToolBar extends JToolBar {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				SocialPrefs.clearPrefs();
+				Social.resetTwitter();
+				Social.window.getTwitPanel();
+				TwitterPanel.panelToRender(Display.LOGIN_BUTTON, Social.window.getTwitPanel());
 			}
 		});
 		

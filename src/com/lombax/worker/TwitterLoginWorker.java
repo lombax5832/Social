@@ -1,39 +1,28 @@
 package com.lombax.worker;
 
-import java.awt.Desktop;
-import java.io.BufferedReader;
-import java.io.InputStreamReader;
-import java.net.URI;
 import java.util.concurrent.ExecutionException;
 
 import javax.swing.SwingWorker;
 
-import com.lombax.Social;
-import com.lombax.preferences.SocialPrefs;
-
 import twitter4j.TwitterException;
 import twitter4j.auth.AccessToken;
-import twitter4j.auth.RequestToken;
+
+import com.lombax.Social;
+import com.lombax.panel.TwitterPanel;
+import com.lombax.panel.TwitterPanel.Display;
+import com.lombax.panel.layout.TwitterEnterPinLayout;
+import com.lombax.preferences.SocialPrefs;
+import com.lombax.twitter.Storage;
 
 public class TwitterLoginWorker extends SwingWorker<AccessToken, AccessToken>{
 
 	@Override
 	protected AccessToken doInBackground() throws Exception {
 		AccessToken accessToken = null;
-		RequestToken requestToken = Social.twitter.getOAuthRequestToken();
-		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-		while (null == accessToken) {
-	      System.out.println("Open the following URL and grant access to your account:");
-	      System.out.println(requestToken.getAuthorizationURL());
-	      if(Desktop.isDesktopSupported())
-	      {
-	        Desktop.getDesktop().browse(new URI(requestToken.getAuthorizationURL()));
-	      }
-	      System.out.print("Enter the PIN(if available) or just hit enter.[PIN]:");
-	      String pin = br.readLine();
+		String pin = TwitterEnterPinLayout.getPin();
 	      try{
 	         if(pin.length() > 0){
-	           accessToken = Social.twitter.getOAuthAccessToken(requestToken, pin);
+	           accessToken = Social.twitter.getOAuthAccessToken(Storage.requestToken, pin);
 	         }else{
 	           accessToken = Social.twitter.getOAuthAccessToken();
 	         }
@@ -47,7 +36,6 @@ public class TwitterLoginWorker extends SwingWorker<AccessToken, AccessToken>{
 	          te.printStackTrace();
 	        }
 	      }
-	    }
 		return accessToken;
 	}
 	
@@ -57,10 +45,12 @@ public class TwitterLoginWorker extends SwingWorker<AccessToken, AccessToken>{
 		try {
 			accessToken = get();
 			SocialPrefs.saveTwitterAccessTokens(accessToken);
+			TwitterPanel.panelToRender(Display.LOGGED_IN, Social.window.getTwitPanel());
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		} catch (ExecutionException e) {
 			e.printStackTrace();
 		}
 	}
+
 }

@@ -63,5 +63,9 @@ public class MainFrame extends JFrame {
 	public MailPanel getMailPanel(){
 		return mailPanel;
 	}
+	
+	public TwitterPanel getTwitPanel(){
+		return twitPanel;
+	}
 
 }

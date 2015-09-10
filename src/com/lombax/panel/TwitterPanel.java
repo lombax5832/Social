@@ -2,10 +2,13 @@ package com.lombax.panel;
 
 import javax.swing.JPanel;
 
+import twitter4j.auth.AccessToken;
+
+import com.lombax.panel.layout.TwitterEnterPinLayout;
+import com.lombax.panel.layout.TwitterHomeLayout;
 import com.lombax.panel.layout.TwitterNotSignedInLayout;
 import com.lombax.preferences.SocialPrefs;
-
-import twitter4j.auth.AccessToken;
+import com.lombax.twitter.Storage;
 
 public class TwitterPanel extends JPanel {
 
@@ -16,9 +19,10 @@ public class TwitterPanel extends JPanel {
 	
 	private static AccessToken accessToken;
 	
-	private static enum Display{
+	public static enum Display{
 		LOGIN_BUTTON,
-		LOGIN_PAGE
+		LOGIN_PAGE,
+		LOGGED_IN
 	}
 	
 	/**
@@ -27,10 +31,28 @@ public class TwitterPanel extends JPanel {
 	public TwitterPanel() {
 		//Load the access token
 		accessToken=SocialPrefs.loadTwitterAccessTokens();
-		
-		if(accessToken==null)
-			TwitterNotSignedInLayout.layout(this);
-		
+		if(accessToken==null&&Storage.requestToken==null){
+			panelToRender(Display.LOGIN_BUTTON,this);
+		}else{
+			panelToRender(Display.LOGGED_IN,this);
+		}
+			
+	}
+	
+	public static void panelToRender(Display toDisp, JPanel panel){
+		panel.removeAll();
+		switch(toDisp){
+		case LOGIN_BUTTON:TwitterNotSignedInLayout.layout(panel);
+			break;
+		case LOGIN_PAGE:TwitterEnterPinLayout.layout(panel);
+			break;
+		case LOGGED_IN:TwitterHomeLayout.layout(panel);
+			break;
+		default:
+			break;
+		}
+		panel.repaint();
+		panel.revalidate();
 	}
 	
 //	public static setLayout(){
