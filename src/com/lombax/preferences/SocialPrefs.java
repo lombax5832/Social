@@ -52,10 +52,4 @@ public class SocialPrefs {
 		}
 	}
 	
-	/*
-	public static void clearAccessTokens(){
-		Social.twitter.setOAuthAccessToken(null);
-	}
-	*/
-	
 }

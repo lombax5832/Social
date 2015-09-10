@@ -8,6 +8,7 @@ import javax.swing.UnsupportedLookAndFeelException;
 
 import com.lombax.frame.MainFrame;
 import com.lombax.preferences.SocialPrefs;
+import com.lombax.twitter.Constants;
 
 import twitter4j.Twitter;
 import twitter4j.TwitterFactory;
@@ -39,7 +40,7 @@ public class Social {
 					window.getContentPane().setEnabled(false);
 					SocialPrefs.loadTextArea();
 //					SocialPrefs.clearAccessTokens();
-					twitter.setOAuthConsumer("MsHSDeAPa0jHNkg7MKot2sGHf", "psRmCKpvIdSHynvusYRXCvaorOJeGysDvDgb62pc4yKTN3UJGd");
+					twitter.setOAuthConsumer(Constants.TWITTER_OAUTH_CONSUMER_KEY, Constants.TWITTER_OAUTH_CONSUMER_SECRET);
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
