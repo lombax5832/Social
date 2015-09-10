@@ -11,7 +11,7 @@ public class Utils {
 
 	public static int TwitterPanelToShow = 0;
 	
-	public static String serializeToken(AccessToken token){
+	public static String serializeObject(Object token){
 		try {
 		     ByteArrayOutputStream bo = new ByteArrayOutputStream();
 		     ObjectOutputStream so = new ObjectOutputStream(bo);
@@ -23,7 +23,7 @@ public class Utils {
 		 }
 		return null;
 	}
-	public static AccessToken deserializeToken(String tokenString){
+	public static Object deserializeToken(String tokenString){
 		AccessToken accessToken = null;
 		try {
 //			Social.log("Deserializing: "+tokenString);

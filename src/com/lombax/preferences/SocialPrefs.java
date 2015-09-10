@@ -4,6 +4,7 @@ import java.util.prefs.BackingStoreException;
 import java.util.prefs.Preferences;
 
 import twitter4j.auth.AccessToken;
+import twitter4j.auth.RequestToken;
 
 import com.lombax.Social;
 import com.lombax.twitter.Utils;
@@ -19,6 +20,7 @@ public class SocialPrefs {
 //	private static final String TWITTER_ACCESS_TOKEN_NAME = "TWITTER_ACCESS_TOKEN";
 //	private static final String TWITTER_ACCESS_SECRET_NAME = "TWITTER_ACCESS_SECRET";
 	private static final String TWITTER_ACCESS_TOKENS_NAME = "TWITTER_ACCESS_TOKENS";
+	private static final String TWITTER_REQUEST_TOKENS_NAME = "TWITTER_REQUEST_TOKENS";
 	
 	//Default Values
 	private static final String TEXT_AREA_DEFAULT = "";
@@ -34,16 +36,27 @@ public class SocialPrefs {
 	
 	//Twitter Keys
 	public static void saveTwitterAccessTokens(AccessToken accessTokens){
-		prefs.put(TWITTER_ACCESS_TOKENS_NAME, Utils.serializeToken(accessTokens));
+		prefs.put(TWITTER_ACCESS_TOKENS_NAME, Utils.serializeObject(accessTokens));
 	}
 	public static AccessToken loadTwitterAccessTokens(){
 		String tokenString = prefs.get(TWITTER_ACCESS_TOKENS_NAME, "");
 		AccessToken accessTokens = null;
 		if(tokenString!="")
-			accessTokens = Utils.deserializeToken(tokenString);
+			accessTokens = (AccessToken) Utils.deserializeToken(tokenString);
 		return accessTokens;
 	}
-
+	
+	public static void saveTwitterRequestTokens(RequestToken requestTokens){
+		prefs.put(TWITTER_REQUEST_TOKENS_NAME, Utils.serializeObject(requestTokens));
+	}
+	public static RequestToken loadTwitterRequestTokens(){
+		String tokenString = prefs.get(TWITTER_REQUEST_TOKENS_NAME, "");
+		RequestToken requestTokens = null;
+		if(tokenString!="")
+			requestTokens = (RequestToken) Utils.deserializeToken(tokenString);
+		return requestTokens;
+	}
+	
 	public static void clearPrefs(){
 		try {
 			prefs.clear();
