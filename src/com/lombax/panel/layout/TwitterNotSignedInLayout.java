@@ -6,13 +6,13 @@ import java.awt.event.ActionListener;
 import javax.swing.JButton;
 import javax.swing.JPanel;
 
-import net.miginfocom.swing.MigLayout;
-import twitter4j.auth.AccessToken;
-
 import com.lombax.Social;
 import com.lombax.frame.component.SocialButton;
 import com.lombax.preferences.SocialPrefs;
 import com.lombax.worker.TwitterLoginWorker;
+
+import net.miginfocom.swing.MigLayout;
+import twitter4j.auth.AccessToken;
 
 public class TwitterNotSignedInLayout {
 	

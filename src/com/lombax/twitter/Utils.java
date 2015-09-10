@@ -8,6 +8,8 @@ import java.io.ObjectOutputStream;
 import twitter4j.auth.AccessToken;
 
 public class Utils {
+
+	public static int TwitterPanelToShow = 0;
 	
 	public static String serializeToken(AccessToken token){
 		try {

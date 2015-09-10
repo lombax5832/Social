@@ -29,7 +29,7 @@ public class TwitterLoginWorker extends SwingWorker<AccessToken, AccessToken>{
 	      {
 	        Desktop.getDesktop().browse(new URI(requestToken.getAuthorizationURL()));
 	      }
-	      System.out.print("Enter the PIN(if aviailable) or just hit enter.[PIN]:");
+	      System.out.print("Enter the PIN(if available) or just hit enter.[PIN]:");
 	      String pin = br.readLine();
 	      try{
 	         if(pin.length() > 0){
@@ -51,6 +51,7 @@ public class TwitterLoginWorker extends SwingWorker<AccessToken, AccessToken>{
 		return accessToken;
 	}
 	
+	@Override
 	protected void done(){
 		AccessToken accessToken;
 		try {

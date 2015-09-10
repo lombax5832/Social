@@ -39,7 +39,6 @@ public class Social {
 					window.setIconImage(Toolkit.getDefaultToolkit().getImage(Social.class.getResource("/javax/swing/plaf/metal/icons/ocean/info.png")));
 					window.getContentPane().setEnabled(false);
 					SocialPrefs.loadTextArea();
-//					SocialPrefs.clearAccessTokens();
 					twitter.setOAuthConsumer(Constants.TWITTER_OAUTH_CONSUMER_KEY, Constants.TWITTER_OAUTH_CONSUMER_SECRET);
 				} catch (Exception e) {
 					e.printStackTrace();
