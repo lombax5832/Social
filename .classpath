@@ -3,7 +3,7 @@
 	<classpathentry kind="src" path="src"/>
 	<classpathentry exported="true" kind="lib" path="miglayout15-swing.jar" sourcepath="miglayout-src.zip"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
-	<classpathentry exported="true" kind="lib" path="twitter4j-core-4.0.4.jar">
+	<classpathentry exported="true" kind="lib" path="twitter4j-core-4.0.4.jar" sourcepath="C:/Twitter4J/twitter4j-core/src">
 		<attributes>
 			<attribute name="javadoc_location" value="http://twitter4j.org/javadoc"/>
 		</attributes>
