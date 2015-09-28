@@ -115,7 +115,7 @@ public class TwitterSocial {
 	 * @return
 	 */
 	private AccessToken loadToken(){
-		System.out.println("Access Token: "+SocialPrefs.ACCESS_TOKEN_NAME);
+		System.out.println("Access Token: "+SocialPrefs.load(SocialPrefs.ACCESS_TOKEN_NAME));
 		AccessToken accToken = new AccessToken(SocialPrefs.load(SocialPrefs.ACCESS_TOKEN_NAME),SocialPrefs.load(SocialPrefs.ACCESS_TOKEN_SECRET_NAME));
 		return accToken;
 	}
