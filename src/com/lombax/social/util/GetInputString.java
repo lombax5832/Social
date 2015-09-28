@@ -26,6 +26,7 @@ public class GetInputString {
 		catch(IOException e){
 			e.printStackTrace();
 		}
+		System.out.println("Read line: "+"\""+s+"\"");
 		return s;
 	}
 	

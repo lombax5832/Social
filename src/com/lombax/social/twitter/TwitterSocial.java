@@ -42,7 +42,7 @@ public class TwitterSocial {
 	 */
 	public void login() throws IllegalStateException, TwitterException, URISyntaxException{
 		
-		if(keysSaved()&&(GetInputString.getInputString("Sign in as existing user( y / n ):").toString()=="y".toString())){
+		if(keysSaved()&&GetInputString.getInputString("Sign in as existing user( y for yes ): ").equals("y")){
 			accToken = loadToken();
 			twitter.setOAuthAccessToken(accToken);
 		}else{
@@ -54,10 +54,6 @@ public class TwitterSocial {
 		System.out.println("User: @"+twitter.getScreenName()+" successfully logged in!");
 		
 		saveToken(accToken);
-	}
-	
-	public void login(AccessToken token){
-		
 	}
 	
 	/**
@@ -119,6 +115,7 @@ public class TwitterSocial {
 	 * @return
 	 */
 	private AccessToken loadToken(){
+		System.out.println("Access Token: "+SocialPrefs.ACCESS_TOKEN_NAME);
 		AccessToken accToken = new AccessToken(SocialPrefs.load(SocialPrefs.ACCESS_TOKEN_NAME),SocialPrefs.load(SocialPrefs.ACCESS_TOKEN_SECRET_NAME));
 		return accToken;
 	}

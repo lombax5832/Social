@@ -22,6 +22,7 @@ public class TwitterHomePanel extends JPanel {
 		
 	}
 	
+	@SuppressWarnings("unused")
 	public static void refreshData(ResponseList<Status> list){
 		for(Status each : list){
 			
