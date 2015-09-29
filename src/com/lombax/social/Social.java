@@ -27,8 +27,8 @@ public class Social {
 		try {
 			twitter.login();
 		} catch (IllegalStateException | TwitterException | URISyntaxException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		twitter.listTimeline(twitter.getHomeTimeline());
 	}
 }

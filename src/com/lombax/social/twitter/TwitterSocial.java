@@ -5,6 +5,8 @@ import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
 
+import twitter4j.ResponseList;
+import twitter4j.Status;
 import twitter4j.Twitter;
 import twitter4j.TwitterException;
 import twitter4j.TwitterFactory;
@@ -54,6 +56,17 @@ public class TwitterSocial {
 		System.out.println("User: @"+twitter.getScreenName()+" successfully logged in!");
 		
 		saveToken(accToken);
+	}
+	
+	/**
+	 * Prints all the statuses from the given list
+	 * @param list List to print statuses from
+	 */
+	public void listTimeline(ResponseList<Status> list){
+		for(int i=0;i<list.size();i++){
+			Status status = list.get(i);
+			System.out.println("@"+status.getUser().getScreenName()+": "+status.getText());
+		}
 	}
 	
 	/**
@@ -128,5 +141,26 @@ public class TwitterSocial {
 		if(SocialPrefs.load(SocialPrefs.ACCESS_TOKEN_NAME)!=null)
 			return true;
 		return false;
+	}
+	
+	/**
+	 * Returns the username in the stored access token
+	 * @return Username stored in AccessToken Object
+	 */
+	public String getScreenName(){
+		return accToken.getScreenName();
+	}
+	
+	/**
+	 * Returns the user's home page time line
+	 * @return
+	 */
+	public ResponseList<Status> getHomeTimeline(){
+		try {
+			return twitter.getHomeTimeline();
+		} catch (TwitterException e) {
+			e.printStackTrace();
+		}
+		return null;
 	}
 }
