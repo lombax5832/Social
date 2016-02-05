@@ -34,7 +34,7 @@ public class TwitterBackgroundWorker extends SwingWorker<Integer, String>{
 //			exception.printStackTrace();
 //		}
 		
-		txtrTextAreaTimeline.setText(twitter.getTimelineString(twitter.getMentionsTimeline()));
+		txtrTextAreaTimeline.setText(twitter.getTimelineString(twitter.getHomeTimeline()));
 		labelSignedInAs.setText("Signed in as: @" + twitter.getScreenName());
 		
 		return 1;
