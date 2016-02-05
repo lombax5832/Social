@@ -1,15 +1,17 @@
 package com.lombax.social.panel;
 
 import java.awt.EventQueue;
+import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
 
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
-import javax.swing.JScrollPane;
+import javax.swing.ScrollPaneConstants;
 
 public class SocialFrame extends JFrame {
 	/**
@@ -21,7 +23,7 @@ public class SocialFrame extends JFrame {
 	private JScrollPane scrollPane;
 	
 	public JLabel labelSignedInAs;
-	public JTextArea txtrTextAreaTimeline;
+	public JTextArea  txtrTextAreaTimeline;
 	/**
 	 * Launch the application.
 	 */
@@ -56,29 +58,34 @@ public class SocialFrame extends JFrame {
 		GridBagConstraints gbc_labelSignedInAs = new GridBagConstraints();
 		gbc_labelSignedInAs.fill = GridBagConstraints.HORIZONTAL;
 		gbc_labelSignedInAs.anchor = GridBagConstraints.NORTH;
-		gbc_labelSignedInAs.insets = new Insets(0, 0, 5, 0);
+		gbc_labelSignedInAs.insets = new Insets(5, 5, 5, 0);
 		gbc_labelSignedInAs.gridx = 0;
 		gbc_labelSignedInAs.gridy = 0;
 		getContentPane().add(labelSignedInAs, gbc_labelSignedInAs);
 		
 		scrollPane = new JScrollPane();
+		scrollPane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+		scrollPane.setViewportBorder(null);
 		GridBagConstraints gbc_scrollPane = new GridBagConstraints();
+		gbc_scrollPane.insets = new Insets(0, 0, 5, 0);
 		gbc_scrollPane.fill = GridBagConstraints.BOTH;
 		gbc_scrollPane.gridx = 0;
 		gbc_scrollPane.gridy = 1;
 		getContentPane().add(scrollPane, gbc_scrollPane);
 		
 		txtrTextAreaTimeline = new JTextArea();
-		scrollPane.setViewportView(txtrTextAreaTimeline);
 		txtrTextAreaTimeline.setLineWrap(true);
 		txtrTextAreaTimeline.setWrapStyleWord(true);
+		txtrTextAreaTimeline.setFont(new Font("Rockwell", Font.PLAIN, 14));
+		scrollPane.setViewportView(txtrTextAreaTimeline);
+//		txtrTextAreaTimeline.setLineWrap(true);
+//		txtrTextAreaTimeline.setWrapStyleWord(true);
 		txtrTextAreaTimeline.setEditable(false);
 		
 		txtField = new JTextField();
 		txtField.setText("Field");
 		GridBagConstraints gbc_txtField = new GridBagConstraints();
 		gbc_txtField.fill = GridBagConstraints.HORIZONTAL;
-		gbc_txtField.insets = new Insets(0, 0, 0, 0);
 		gbc_txtField.gridx = 0;
 		gbc_txtField.gridy = 2;
 		getContentPane().add(txtField, gbc_txtField);

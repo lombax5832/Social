@@ -7,7 +7,7 @@ public class SocialPrefs {
 	/**
 	 * Used for storing information
 	 */
-	private static Preferences prefs = Preferences.userNodeForPackage(com.lombax.social.Social.class);
+	private static Preferences prefs = Preferences.userNodeForPackage(com.lombax.Social.class);
 	
 	/**
 	 * Name access tokens are saved under

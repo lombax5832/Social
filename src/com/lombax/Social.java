@@ -1,59 +1,65 @@
 package com.lombax;
 
 import java.awt.EventQueue;
-import java.awt.Toolkit;
 
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 
-import com.lombax.frame.MainFrame;
-import com.lombax.preferences.SocialPrefs;
-import com.lombax.twitter.Constants;
-
-import twitter4j.Twitter;
-import twitter4j.TwitterFactory;
-import twitter4j.auth.AccessToken;
+import com.lombax.social.panel.SocialFrame;
+import com.lombax.social.panel.SocialLoginPopup;
+import com.lombax.social.worker.TwitterLoginWorker;
 
 public class Social {
-
-	/**
-	 * Launch the application.
-	 */
 	
-	public static MainFrame window;
-	public static Twitter twitter;
-	public static AccessToken accessToken = null;
+	private SocialFrame socialFrame;
+	private SocialLoginPopup socialLoginPopup;
 	
+	private TwitterLoginWorker twitLoginWorker;
+	
+	private Social(String[] args){
+		
+	}
+	
+	//Pass args to constructor
 	public static void main(String[] args) {
+		new Social(args).Run();
+	}
+	
+	//Start the program
+	private void Run(){
 		
 		try {
 			UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
 		} catch (ClassNotFoundException | InstantiationException
-				| IllegalAccessException | UnsupportedLookAndFeelException e1) {
-			e1.printStackTrace();
+				| IllegalAccessException | UnsupportedLookAndFeelException exception) {
+			exception.printStackTrace();
 		}
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					resetTwitter();
-					window = new MainFrame("Social");
-					window.setIconImage(Toolkit.getDefaultToolkit().getImage(Social.class.getResource("/javax/swing/plaf/metal/icons/ocean/info.png")));
-					window.getContentPane().setEnabled(false);
-					SocialPrefs.loadTextArea();
-					twitter.setOAuthConsumer(Constants.TWITTER_OAUTH_CONSUMER_KEY, Constants.TWITTER_OAUTH_CONSUMER_SECRET);
-				} catch (Exception e) {
-					e.printStackTrace();
+					socialFrame = new SocialFrame();
+					socialLoginPopup = new SocialLoginPopup();
+					socialFrame.setVisible(true);
+					socialLoginPopup.setVisible(false);
+				} catch (Exception exception) {
+					exception.printStackTrace();
 				}
+				twitLoginWorker = new TwitterLoginWorker(socialFrame.txtrTextAreaTimeline, socialFrame.labelSignedInAs, socialLoginPopup);
+				twitLoginWorker.execute();
 			}
-		});
+		});	
+		
 	}
-	
-	public static void log(String log){
-		System.out.println(log);
-	}
-	
-	public static void resetTwitter(){
-		twitter = TwitterFactory.getSingleton();
-	}
-
+//	public static void main(String[] args) {
+//		EventQueue.invokeLater(new Runnable() {
+//			public void run() {
+//				try {
+//					SocialFrame2 frame = new SocialFrame2();
+//					frame.setVisible(true);
+//				} catch (Exception e) {
+//					e.printStackTrace();
+//				}
+//			}
+//		});
+//	}
 }

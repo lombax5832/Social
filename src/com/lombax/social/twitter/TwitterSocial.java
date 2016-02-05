@@ -104,11 +104,11 @@ public class TwitterSocial {
 		StringBuilder strBldr = new StringBuilder("");
 			for(int i=0;i<list.size();i++){
 				Status status = list.get(i);
-				
 				if(i>0)
-					strBldr.append("\n");
+					strBldr.append("\n\n");
 				
 				strBldr.append("@"+status.getUser().getScreenName()+": "+status.getText());
+				
 			}
 		return strBldr.toString();
 	}
@@ -202,6 +202,15 @@ public class TwitterSocial {
 	public ResponseList<Status> getHomeTimeline(){
 		try {
 			return twitter.getHomeTimeline();
+		} catch (TwitterException e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+	
+	public ResponseList<Status> getMentionsTimeline(){
+		try {
+			return twitter.getMentionsTimeline();
 		} catch (TwitterException e) {
 			e.printStackTrace();
 		}
