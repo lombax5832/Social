@@ -1,130 +1,71 @@
 package com.lombax.frame;
 
-import java.awt.Color;
 import java.awt.Container;
 import java.awt.Dimension;
-import java.awt.Font;
-import java.awt.Insets;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
 
-import javax.swing.BorderFactory;
-import javax.swing.JButton;
+import javax.swing.ImageIcon;
 import javax.swing.JFrame;
-import javax.swing.JScrollPane;
-import javax.swing.JTextArea;
-import javax.swing.JTextField;
-import javax.swing.JToolBar;
+import javax.swing.JTabbedPane;
 
 import net.miginfocom.swing.MigLayout;
 
-import com.lombax.frame.component.SocialButton;
-import com.lombax.frame.component.SocialToolBar;
+import com.lombax.Social;
+import com.lombax.image.Images;
+import com.lombax.panel.MailPanel;
+import com.lombax.panel.MainPanel;
+import com.lombax.panel.TwitterPanel;
 
 /**
  * @author Alexei
  *
  * Creates the frame and all components within
  */
-public class MainFrame extends JFrame implements KeyListener {
-
+public class MainFrame extends JFrame {
 	private static final long serialVersionUID = -3784362640059427003L;
-
-	private JButton btnEnter;
-	private JTextField textField;
-	private static JTextArea textArea;
-	private JScrollPane scrollPane;
-	private JToolBar toolBar;
+	
+	private JTabbedPane tabbedPane;
+	
 	private Container c = getContentPane();
+	
+	private MainPanel mainPanel = new MainPanel();
+	private MailPanel mailPanel = new MailPanel();
+	private TwitterPanel twitPanel = new TwitterPanel();
 	
 	public MainFrame(String title){
 		super(title);
+		
+		Social.log("MainFrame started.");
+		
 		setVisible(true);
 		setBounds(100,100,1000,800);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setPreferredSize(new Dimension(500,400));
+		setPreferredSize(new Dimension(1000,800));
+		setMinimumSize(new Dimension(500,400));
 		
-		// Set layout manager
-		c.setLayout(new MigLayout("nogrid,flowy,wrap 1,fill"));
+		c.setLayout(new MigLayout("fill"));
+		Social.log("MainFrame layout set to MigLayout.");
 		
-		// Create swing components
-		
-		textField = new JTextField();
-		textField.setMargin(new Insets(10,10,10,10));
-		textField.setFont(new Font("Arial", 0, 30));
-		textField.setFocusable(true);
-		textField.addKeyListener(this);
-		
-		textArea = new JTextArea();
-		textArea.setMargin(new Insets(10,10,10,10));
-		textArea.setEditable(false);
-		textArea.setBackground(Color.BLACK);
-		textArea.setForeground(Color.CYAN);
-		textArea.setFont(new Font("Arial", 0, 30));
-		textArea.setFocusable(false);
-		textArea.setSize(textArea.getPreferredSize());
-		
-		btnEnter = new SocialButton("Enter",new ActionListener(){
-			@Override
-			public void actionPerformed(ActionEvent arg0) {
-				if(textField.getText().length()>0){
-					if(textArea.getText().length()>0)
-						textArea.append("\n");
-						
-					textArea.append(textField.getText());
-					textField.setText(null);
-				}
-			}
-			
-		});
-		btnEnter.setFocusable(false);
-		
-		scrollPane = new JScrollPane(textArea);
-		scrollPane.setFocusable(false);
-		
-		toolBar = new SocialToolBar("Tool Bar");
-		toolBar.setFocusable(false);
-		toolBar.setBorder(BorderFactory.createLineBorder(Color.GRAY, 1));
-//		toolBar.add(new SocialButton("Clear",new ButtonClearListener()));
-		
-		// Add components to pane
-		
-		c.add(toolBar,"span,center, growx 100, gap 0 0 0 0");
-		c.add(textField, "span,center,growx 100,gap 0 0 0 0");
-		c.add(scrollPane, "span,center,grow 100 100,gap 0 0 0 0");		
-		c.add(btnEnter, "span,center,growx 100, gap 0 0 0 0");
-	
-		// Set default focus
-		textField.requestFocusInWindow();
-	}
-
-	@Override
-	public void keyPressed(KeyEvent key) {
-		if(key.getKeyCode()==KeyEvent.VK_ENTER){
-			btnEnter.doClick();
-			System.out.println("Enter Pressed.");
-		}
+		tabbedPane = new JTabbedPane();
+		tabbedPane.addTab("Main", mainPanel);
+		tabbedPane.addTab("Mail", mailPanel);
+		tabbedPane.addTab(null, new ImageIcon(Images.TWITTER_ICON_32), twitPanel);
+		tabbedPane.setFocusable(false);
+//		tabbedPane
+		mainPanel.requestFocus();
+		c.add(tabbedPane,"span,grow");
+		Social.log("TabbedPane added to container.");
 	}
 	
-	public static void clearTextArea(JTextArea textArea){
-		textArea.setText(null);
+	public MainPanel getMainPanel(){
+		return mainPanel;
 	}
 	
-	public static JTextArea getTextArea(){
-		return textArea;
+	public MailPanel getMailPanel(){
+		return mailPanel;
 	}
 	
-	public static void setTextArea(String text){
-		textArea.setText(text);
+	public TwitterPanel getTwitPanel(){
+		return twitPanel;
 	}
-
-	@Override
-	public void keyReleased(KeyEvent key) {
-	}
-
-	@Override
-	public void keyTyped(KeyEvent key) {}
 
 }
