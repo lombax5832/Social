@@ -5,6 +5,10 @@ import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
 
+import com.lombax.social.panel.SocialLoginPopup;
+import com.lombax.social.prefs.SocialPrefs;
+import com.lombax.social.util.GetInputString;
+
 import twitter4j.ResponseList;
 import twitter4j.Status;
 import twitter4j.Twitter;
@@ -12,9 +16,6 @@ import twitter4j.TwitterException;
 import twitter4j.TwitterFactory;
 import twitter4j.auth.AccessToken;
 import twitter4j.auth.RequestToken;
-
-import com.lombax.social.prefs.SocialPrefs;
-import com.lombax.social.util.GetInputString;
 
 public class TwitterSocial {
 	
@@ -25,6 +26,8 @@ public class TwitterSocial {
 	private String pin;
 	
 	private AccessToken accToken;
+	
+	private String screenName = null;
 	
 	/**
 	 * Creates new twitter object with given consumer keys
@@ -55,6 +58,30 @@ public class TwitterSocial {
 		}
 		System.out.println("User: @"+twitter.getScreenName()+" successfully logged in!");
 		
+		screenName = twitter.getScreenName();
+		
+		saveToken(accToken);
+	}
+	
+	/**
+	 * Logs the user in and saves keys
+	 * @throws TwitterException 
+	 * @throws IllegalStateException 
+	 * @throws URISyntaxException 
+	 */
+	public void login(SocialLoginPopup socialLoginPopup, boolean existingUser) throws IllegalStateException, TwitterException, URISyntaxException{
+		
+		if(keysSaved()&&existingUser){
+			accToken = loadToken();
+			twitter.setOAuthAccessToken(accToken);
+		}else{
+		pin = socialLoginPopup.txtPin.getText();
+		accToken = twitter.getOAuthAccessToken(reqToken, pin);
+		}
+		System.out.println("User: @"+twitter.getScreenName()+" successfully logged in!");
+		
+		screenName = twitter.getScreenName();
+		
 		saveToken(accToken);
 	}
 	
@@ -70,6 +97,23 @@ public class TwitterSocial {
 	}
 	
 	/**
+	 * Returns all the statuses from the given list as a string
+	 * @param list List to print statuses from
+	 */
+	public String getTimelineString(ResponseList<Status> list){
+		StringBuilder strBldr = new StringBuilder("");
+			for(int i=0;i<list.size();i++){
+				Status status = list.get(i);
+				
+				if(i>0)
+					strBldr.append("\n");
+				
+				strBldr.append("@"+status.getUser().getScreenName()+": "+status.getText());
+			}
+		return strBldr.toString();
+	}
+	
+	/**
 	 * Gets the OAuthRequestToken from twitter
 	 * @throws TwitterException
 	 */
@@ -81,7 +125,7 @@ public class TwitterSocial {
 	 * @return URI
 	 * @throws URISyntaxException
 	 */
-	private URI getAuthURI() throws URISyntaxException{
+	public URI getAuthURI() throws URISyntaxException{
 		return new URI(reqToken.getAuthorizationURL());
 	}
 	
@@ -89,7 +133,7 @@ public class TwitterSocial {
 	 * Opens the URL with the default browser
 	 * @param uri The URI to be opened
 	 */
-	private void openURL(URI uri){
+	public void openURL(URI uri){
 		//Check for isDesktopSupported first
 		if(Desktop.isDesktopSupported()){
 			try {
@@ -125,7 +169,7 @@ public class TwitterSocial {
 	
 	/**
 	 * Loads token from saved keys
-	 * @return
+	 * @return loaded AccessToken
 	 */
 	private AccessToken loadToken(){
 		System.out.println("Access Token: "+SocialPrefs.load(SocialPrefs.ACCESS_TOKEN_NAME));
@@ -148,7 +192,7 @@ public class TwitterSocial {
 	 * @return Username stored in AccessToken Object
 	 */
 	public String getScreenName(){
-		return accToken.getScreenName();
+		return screenName;
 	}
 	
 	/**
